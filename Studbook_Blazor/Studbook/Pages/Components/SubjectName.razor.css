@@ -18,6 +18,8 @@
         background: #E3E2E2;
         border: solid 3px #484878;
         border-radius: 15px;
+        color: #22223B;
+        font-size: 24px;
     }
 
     .container input[type=text]:focus {
