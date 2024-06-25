@@ -1,0 +1,6 @@
+﻿.container {
+    display: inline-grid;
+    grid-template-columns: [name] 45% [credits] minmax(0, 1fr) [score] minmax(0, 1fr);
+    grid-column-gap: 24px;
+    box-sizing: border-box;
+}
