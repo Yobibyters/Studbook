@@ -1,4 +1,4 @@
-﻿.container {
+﻿.subject-name {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -6,22 +6,16 @@
     gap: 10px;
 }
 
-    .container .title {
-        font-weight: 600;
-        font-size: 24px;
-        color: #ffffff;
-    }
+.input-text {
+    height: 75px;
+    padding: 0 14px;
+    background: #E3E2E2;
+    border: solid 3px #484878;
+    border-radius: 15px;
+    color: #22223B;
+    font-size: 30px;
+}
 
-    .container .input-field {
-        height: 75px;
-        padding: 0 14px;
-        background: #E3E2E2;
-        border: solid 3px #484878;
-        border-radius: 15px;
-        color: #22223B;
-        font-size: 30px;
-    }
-
-    .container input[type=text]:focus {
+    .input-text:focus {
         outline: none;
     }
