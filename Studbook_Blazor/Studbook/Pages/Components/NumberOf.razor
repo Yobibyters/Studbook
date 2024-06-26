@@ -1,9 +1,27 @@
-﻿<div class="container">
-    <div class="title">@Title</div>
-    <input class="input-field" type="number" />
+﻿@inject IJSRuntime js;
+
+<div class="number-of">
+    <input class="input-number" type="number" @ref=InputElem />
+    <div class="up" @ref=UpElem>
+        <i class="ph-bold ph-caret-up"></i>
+
+    </div>
+    <div class="down" @ref=DownElem>
+        <i class="ph-bold ph-caret-down"></i>
+    </div>
 </div>
 
 @code {
-    [Parameter]
-    public string Title { get; set; } = default!;
+    private IJSObjectReference jsModule;
+    private ElementReference InputElem;
+    private ElementReference UpElem;
+    private ElementReference DownElem;
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            jsModule = await js.InvokeAsync<IJSObjectReference>("import", "./Pages/Components/NumberOf.razor.js");
+            await jsModule.InvokeVoidAsync("NumberOf.Init", InputElem, UpElem, DownElem);
+        }
+    }
 }
