@@ -1,4 +1,5 @@
-﻿.container {
+﻿.number-of {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -6,22 +7,42 @@
     gap: 10px;
 }
 
-    .container .title {
-        font-weight: 600;
-        font-size: 24px;
-        color: #ffffff;
-    }
+.input-number {
+    height: 75px;
+    padding: 0 14px;
+    background: #E3E2E2;
+    border: solid 3px #484878;
+    border-radius: 15px;
+    color: #22223B;
+    font-size: 30px;
+}
 
-    .container .input-field {
-        height: 75px;
-        padding: 0 14px;
-        background: #E3E2E2;
-        border: solid 3px #484878;
-        border-radius: 15px;
-        color: #22223B;
-        font-size: 30px;
-    }
-
-    .container input[type=number]:focus {
+    .input-number:focus {
         outline: none;
     }
+
+    .input-number::-webkit-inner-spin-button,
+    .input-number::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+.up {
+    top: 5px;
+}
+
+.down {
+    bottom: 5px;
+}
+
+.up, .down {
+    position: absolute;
+    width: fit-content;
+    height:fit-content;
+    right: 13px;
+}
+
+i {
+    color: #484878;
+    font-size: 36px;
+}
