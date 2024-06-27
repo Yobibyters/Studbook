@@ -1,4 +1,5 @@
 ﻿.subject-name {
+    height: 100%;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -7,7 +8,7 @@
 }
 
 .input-text {
-    height: 75px;
+    height: 100%;
     padding: 0 14px;
     background: #E3E2E2;
     border: solid 3px #484878;

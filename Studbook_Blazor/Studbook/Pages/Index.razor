@@ -2,8 +2,25 @@
 
 <div class="index-container">
     <div class="content">
-        <SubjectScore></SubjectScore>
-        <Button Text="Додати предмет"></Button>
+        @foreach (Subject subject in Subjects)
+        {
+            <SubjectScore Subject=subject RemoveCallback=@RemoveSubject @key=subject></SubjectScore>
+        }
+        <Button Text="Додати предмет" OnClick=AddSubject></Button>
     </div>
 </div>
 
+@code {
+    List<Subject> Subjects { get; set; } = new();
+
+    private void AddSubject()
+    {
+        Subject newSubject = new Subject();
+        Subjects.Add(newSubject);
+    }
+
+    private void RemoveSubject(Subject subject)
+    {
+        Subjects.Remove(subject);
+    }
+}

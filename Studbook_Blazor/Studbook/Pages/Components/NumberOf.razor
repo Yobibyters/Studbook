@@ -1,10 +1,9 @@
 ﻿@inject IJSRuntime js;
 
 <div class="number-of">
-    <input class="input-number" type="number" @ref=InputElem />
+    <input @ref=InputElem class="input-number" type="number" @onchange=ValueChanged min="0" max="100"/>
     <div class="up" @ref=UpElem>
         <i class="ph-bold ph-caret-up"></i>
-
     </div>
     <div class="down" @ref=DownElem>
         <i class="ph-bold ph-caret-down"></i>
@@ -12,10 +11,20 @@
 </div>
 
 @code {
-    private IJSObjectReference jsModule;
+    private IJSObjectReference jsModule = null!;
+
     private ElementReference InputElem;
     private ElementReference UpElem;
     private ElementReference DownElem;
+
+    [Parameter]
+    public EventCallback<string?> OnChange { get; set; }
+
+    private async Task ValueChanged(ChangeEventArgs e)
+    {
+        await OnChange.InvokeAsync(e.Value as string);
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
