@@ -1,6 +1,59 @@
-﻿.container {
+﻿.subject-score {
+    height: 75px;
+    /*min-height: 75px;*/
     display: inline-grid;
     grid-template-columns: [name] 45% [credits] minmax(0, 1fr) [score] minmax(0, 1fr);
     grid-column-gap: 24px;
     box-sizing: border-box;
+    position: relative;
+}
+
+.subject-add {
+    animation: movedown 0.4s normal linear;
+}
+
+.subject-remove {
+    animation: movedown 0.2s reverse forwards linear 1;
+}
+
+.subject-score:hover .remove-btn {
+    opacity: 1;
+    right: -99px;
+    transition: opacity 0.2s, right 0.2s;
+}
+
+.remove-btn {
+    opacity: 0;
+    position: absolute;
+    height: 100%;
+    width: 75px;
+    background: #c30808;
+    border: solid 3px #d34e4e;
+    border-radius: 15px;
+    color: #ffffff;
+    right: -75px;
+    display: flex;
+    font-size: 36px;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s;
+}
+
+    .remove-btn:hover {
+        background: #a30808;
+        transition: 0.2s;
+    }
+
+@keyframes movedown {
+    from {
+        max-height: 0;
+        transform: translateY(-25px);
+        opacity: 0;
+    }
+
+    to {
+        max-height: 200px;
+        transform: translateY(0);
+        opacity: 1;
+    }
 }

@@ -1,9 +1,60 @@
-﻿<div class="container">
-    <SubjectName></SubjectName>
+﻿<div @ref=SubjectScoreElem class="subject-score subject-add">
+    <SubjectName OnChange="@SubjectNameChanged"></SubjectName>
     <NumberOf></NumberOf>
     <NumberOf></NumberOf>
+    <div @ref=RemoveBtnElem class="remove-btn">
+        <i class="ph-bold ph-x"></i>
+    </div>
 </div>
 
-@code {
 
+@code {
+    [Parameter]
+    public Subject Subject { get; set; } = null!;
+
+    [Parameter]
+    public EventCallback<Subject> RemoveCallback { get; set; }
+
+    [Inject]
+    IJSRuntime js { get; set; } = null!;
+    IJSObjectReference jsModule = null!;
+
+    ElementReference RemoveBtnElem;
+    ElementReference SubjectScoreElem;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            jsModule = await js.InvokeAsync<IJSObjectReference>("import", "./Pages/Components/SubjectScore.razor.js");
+            await jsModule.InvokeVoidAsync("SubjectScore.Init", DotNetObjectReference.Create(this), SubjectScoreElem, RemoveBtnElem);
+        }
+    }
+
+    private void SubjectNameChanged(string subjectName)
+    {
+        Subject.Name = subjectName;
+    }
+
+    private void CreditChanged(string subjectCredit)
+    {
+        if (double.TryParse(subjectCredit, out double credit) && credit >= 0)
+        {
+            Subject.Credit = credit;
+        }
+    }
+
+    private void MarkChanged(string subjectMark)
+    {
+        if (double.TryParse(subjectMark, out double mark) && mark >= 0 && mark <= 100)
+        {
+            Subject.Mark = mark;
+        }
+    }
+
+    [JSInvokable]
+    public async Task RemoveSubject()
+    {
+        await RemoveCallback.InvokeAsync(Subject);
+    }
 }
