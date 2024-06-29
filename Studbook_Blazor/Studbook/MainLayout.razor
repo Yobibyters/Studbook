@@ -1,63 +1,67 @@
 ﻿@inherits LayoutComponentBase
 
-<header id="nav-menu" class="header" aria-label="navigation bar">
-    <div class="svg">
-        <a href="https://github.com/Yobibyters/Studbook" target=”_blank”>
-            <img src="/assets/github.svg" />
-        </a>
-    </div>
+<div class="container">
+    <header class="header">
+        <div @ref=MenuElem class="menu">
+            <div class="menu-item svg">
+                <a href="https://github.com/Yobibyters/Studbook" target="_blank">
+                    <img src="/assets/github.svg" />
+                </a>
+            </div>
 
-    <div class="svg">
-        <a href="https://pilot.khai.edu/pilot/checkstudent_link.html" target=”_blank”>
-            <img src="/assets/pilot.svg" />
-        </a>
-    </div>
+            <div class="menu-item svg">
+                <a href="https://pilot.khai.edu/pilot/checkstudent_link.html" target="_blank">
+                    <img src="/assets/pilot.svg" />
+                </a>
+            </div>
 
-    <div class="icon">
-        <i class="ph ph-download-simple"></i>
-    </div>
+            <div class="menu-item icon">
+                <i class="ph ph-download-simple"></i>
+            </div>
 
-    <div class="icon dropdown-btn" data-dropdown="export-dropdown" aria-haspopup="true" aria-expanded="false" aria-label="export">
-        <i class="ph ph-upload-simple"></i>
-    </div>
+            <div class="menu-item icon dropdown-btn">
+                <i class="ph ph-upload-simple"></i>
+                <div class="dropdown">
+                    <div class="dropdown-content">
+                        <ul>
+                            <li>
+                                Скопіювати в буфер обміну
+                            </li>
+                            <li>
+                                XLSX
+                            </li>
+                            <li>
+                                PNG
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button @ref=HamburgerElem class="hamburger">
+            <i class="ph ph-list"></i>
+        </button>
+    </header>
 
-    <div id="export-dropdown" class="export-dropdown">
-        <ul role="menu">
-            <li role="menuitem">
-                Скопіювати
-            </li>
-            <li>
-                .xlsx
-            </li>
-            <li role="menuitem">
-                .png
-            </li>
-        </ul>
-    </div>
-
-    <button id="hamburger" aria-label="hamburger" aria-haspopup="true" aria-expanded="false">
-        <i class="ph ph-list" aria-hidden="true"></i>
-    </button>
-</header>
-
-<main>
-    @Body
-</main>
+    <main>
+        @Body
+    </main>
+</div>
 
 @code {
     [Inject]
     IJSRuntime js { get; set; } = null!;
     IJSObjectReference jsModule = null!;
 
-    ElementReference RemoveBtnElem;
-    ElementReference SubjectScoreElem;
+    ElementReference HamburgerElem;
+    ElementReference MenuElem;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
             jsModule = await js.InvokeAsync<IJSObjectReference>("import", "./MainLayout.razor.js");
-            await jsModule.InvokeVoidAsync("SubjectScore.Init", DotNetObjectReference.Create(this), SubjectScoreElem, RemoveBtnElem);
+            await jsModule.InvokeVoidAsync("MainLayout.Init", HamburgerElem, MenuElem);
         }
     }
- }
+}
