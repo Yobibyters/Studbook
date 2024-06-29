@@ -2,16 +2,28 @@
 
 <div class="index-container">
     <div class="content">
+        <div class="rating">
+            @Rating
+        </div>
         @foreach (Subject subject in Subjects)
         {
-            <SubjectScore Subject=subject RemoveCallback=@RemoveSubject @key=subject></SubjectScore>
+            <SubjectScore @key=subject
+                          Subject=subject
+                          RemoveCallback=@RemoveSubject
+                          OnChange=@CalculateRating>
+            </SubjectScore>
         }
-        <Button Text="Додати предмет" OnClick=AddSubject></Button>
+        @if (Subjects.Count < 10)
+        {
+            <Button Text="Додати предмет" OnClick=AddSubject></Button>
+        }
     </div>
 </div>
 
 @code {
     List<Subject> Subjects { get; set; } = new();
+
+    double Rating { get; set; }
 
     private void AddSubject()
     {
@@ -22,5 +34,28 @@
     private void RemoveSubject(Subject subject)
     {
         Subjects.Remove(subject);
+        CalculateRating();
+    }
+
+    private void CalculateRating()
+    {
+        double rating = 0;
+        List<Subject> subjects = Subjects
+            .Where(s => s.Credit is not null && s.Mark is not null && s.Mark >= 0 && s.Mark <= 100 && s.Credit >= 0)
+            .ToList();
+        double credits = subjects.Sum(s => s.Credit) ?? 0;
+
+        if (credits > 0)
+        {
+            foreach (var subj in subjects)
+            {
+                if (subj.Credit is double credit && subj.Mark is double mark)
+                {
+                    rating += (credit / credits) * mark;
+                }
+            }
+        }
+
+        Rating = Math.Round(rating, 2);
     }
 }
