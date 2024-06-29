@@ -31,12 +31,12 @@ button {
     padding-right: 25px;
 }
 
-.github, .pilot {
+.svg {
     width: fit-content;
     height: fit-content;
 }
 
-.import, .export {
+.icon {
     color: #ffffff;
     font-size: 35px;
 }
