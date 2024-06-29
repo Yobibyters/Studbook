@@ -1,13 +1,22 @@
 ﻿<div class="subject-name">
-    <input class="input-text" type="text" @onchange=NameChanged />
+    <input class="input-text" type="text" @bind=Value />
 </div>
 
 @code {
-    [Parameter]
-    public EventCallback<string?> OnChange { get; set; }
+    string? _value;
 
-    private async Task NameChanged(ChangeEventArgs e)
+    [Parameter]
+    public string? Value
     {
-        await OnChange.InvokeAsync(e.Value as string);
+        get => _value;
+        set
+        {
+            if (_value == value) return;
+            _value = value;
+            ValueChanged.InvokeAsync(_value);
+        }
     }
+
+    [Parameter]
+    public EventCallback<string?> ValueChanged { get; set; }
 }
