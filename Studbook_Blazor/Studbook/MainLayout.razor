@@ -1,6 +1,63 @@
 ﻿@inherits LayoutComponentBase
 
-<header class="header"></header>
+<header id="nav-menu" class="header" aria-label="navigation bar">
+    <div class="svg">
+        <a href="https://github.com/Yobibyters/Studbook" target=”_blank”>
+            <img src="/assets/github.svg" />
+        </a>
+    </div>
+
+    <div class="svg">
+        <a href="https://pilot.khai.edu/pilot/checkstudent_link.html" target=”_blank”>
+            <img src="/assets/pilot.svg" />
+        </a>
+    </div>
+
+    <div class="icon">
+        <i class="ph ph-download-simple"></i>
+    </div>
+
+    <div class="icon dropdown-btn" data-dropdown="export-dropdown" aria-haspopup="true" aria-expanded="false" aria-label="export">
+        <i class="ph ph-upload-simple"></i>
+    </div>
+
+    <div id="export-dropdown" class="export-dropdown">
+        <ul role="menu">
+            <li role="menuitem">
+                Скопіювати
+            </li>
+            <li>
+                .xlsx
+            </li>
+            <li role="menuitem">
+                .png
+            </li>
+        </ul>
+    </div>
+
+    <button id="hamburger" aria-label="hamburger" aria-haspopup="true" aria-expanded="false">
+        <i class="ph ph-list" aria-hidden="true"></i>
+    </button>
+</header>
+
 <main>
     @Body
 </main>
+
+@code {
+    [Inject]
+    IJSRuntime js { get; set; } = null!;
+    IJSObjectReference jsModule = null!;
+
+    ElementReference RemoveBtnElem;
+    ElementReference SubjectScoreElem;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            jsModule = await js.InvokeAsync<IJSObjectReference>("import", "./MainLayout.razor.js");
+            await jsModule.InvokeVoidAsync("SubjectScore.Init", DotNetObjectReference.Create(this), SubjectScoreElem, RemoveBtnElem);
+        }
+    }
+ }
