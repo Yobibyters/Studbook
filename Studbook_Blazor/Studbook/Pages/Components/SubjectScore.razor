@@ -1,7 +1,8 @@
 ﻿<div @ref=SubjectScoreElem class="subject-score subject-add">
-    <SubjectName OnChange="@SubjectNameChanged"></SubjectName>
-    <NumberOf></NumberOf>
-    <NumberOf></NumberOf>
+    <SubjectName @bind-Value=Subject.Name></SubjectName>
+    <NumberOf @bind-Value=Subject.Credit OnChange=@SubjectChanged Step=0.5 Min=0 Max=10></NumberOf>
+    <NumberOf @bind-Value=Subject.Mark OnChange=@SubjectChanged Step=1 Min=0 Max=100></NumberOf>
+    <div class="crutch"></div>
     <div @ref=RemoveBtnElem class="remove-btn">
         <i class="ph-bold ph-x"></i>
     </div>
@@ -14,6 +15,9 @@
 
     [Parameter]
     public EventCallback<Subject> RemoveCallback { get; set; }
+
+    [Parameter]
+    public EventCallback OnChange { get; set; }
 
     [Inject]
     IJSRuntime js { get; set; } = null!;
@@ -31,25 +35,9 @@
         }
     }
 
-    private void SubjectNameChanged(string subjectName)
+    private async Task SubjectChanged()
     {
-        Subject.Name = subjectName;
-    }
-
-    private void CreditChanged(string subjectCredit)
-    {
-        if (double.TryParse(subjectCredit, out double credit) && credit >= 0)
-        {
-            Subject.Credit = credit;
-        }
-    }
-
-    private void MarkChanged(string subjectMark)
-    {
-        if (double.TryParse(subjectMark, out double mark) && mark >= 0 && mark <= 100)
-        {
-            Subject.Mark = mark;
-        }
+        await OnChange.InvokeAsync();
     }
 
     [JSInvokable]
