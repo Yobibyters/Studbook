@@ -1,7 +1,15 @@
 ﻿@inject IJSRuntime js;
+@using System.Globalization;
 
 <div class="number-of">
-    <input @ref=InputElem class="input-number" type="number" @onchange=ValueChanged min="0" max="100"/>
+    <input @ref=InputElem
+           class="input-number @(IsValid ? "" : "error")"
+           type="number"
+           min="@Min.ToString(CultureInfo.InvariantCulture)"
+           max="@Max.ToString(CultureInfo.InvariantCulture)"
+           @bind=Value
+           @bind:event="oninput"
+           step="@Step.ToString(CultureInfo.InvariantCulture)" />
     <div class="up" @ref=UpElem>
         <i class="ph-bold ph-caret-up"></i>
     </div>
@@ -18,12 +26,42 @@
     private ElementReference DownElem;
 
     [Parameter]
-    public EventCallback<string?> OnChange { get; set; }
+    public EventCallback OnChange { get; set; }
 
-    private async Task ValueChanged(ChangeEventArgs e)
+    [Parameter]
+    public double Step { get; set; } = 1;
+
+    [Parameter]
+    public double Min { get; set; } = double.MinValue;
+
+    [Parameter]
+    public double Max { get; set; } = double.MaxValue;
+
+    public bool IsValid
     {
-        await OnChange.InvokeAsync(e.Value as string);
+        get =>
+            Value is not null &&
+            Value >= Min &&
+            Value <= Max;
     }
+
+    double? _value;
+
+    [Parameter]
+    public double? Value
+    {
+        get => _value;
+        set
+        {
+            if (_value == value) return;
+            _value = value;
+            ValueChanged.InvokeAsync(_value);
+            OnChange.InvokeAsync();
+        }
+    }
+
+    [Parameter]
+    public EventCallback<double?> ValueChanged { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

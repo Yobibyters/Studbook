@@ -16,6 +16,7 @@
     border-radius: 15px;
     color: #22223B;
     font-size: 30px;
+    transition: 0.3s;
 }
 
     .input-number:focus {
@@ -27,6 +28,12 @@
         -webkit-appearance: none;
         margin: 0;
     }
+
+.error {
+    background: #e6c6c6;
+    border: solid 3px #ab2222;
+    transition: 0.3s;
+}
 
 .up {
     top: 5px;
