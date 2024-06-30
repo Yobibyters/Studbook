@@ -9,11 +9,3 @@
         padding-bottom: 150px;
         box-sizing: border-box;
     }
-
-.rating{
-    font-size: 50px;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
