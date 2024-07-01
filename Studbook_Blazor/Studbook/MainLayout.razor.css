@@ -158,10 +158,6 @@ main {
 }
 
 @media (max-width: 800px) {
-    a {
-        flex-direction: row;
-        color: #ffffff;
-    }
 
     .header {
         height: 60px;
@@ -200,6 +196,11 @@ main {
         visibility: hidden;
         opacity: 0;
     }
+
+        .menu a {
+            flex-direction: row;
+            color: #ffffff;
+        }
 
         .menu .menu-item {
             align-items: center;
