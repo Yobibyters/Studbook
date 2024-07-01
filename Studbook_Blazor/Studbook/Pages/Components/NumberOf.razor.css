@@ -35,6 +35,10 @@
     transition: 0.3s;
 }
 
+.error-updown i {
+    color: #ab2222;
+}
+
 .up {
     top: 5px;
 }
@@ -46,7 +50,7 @@
 .up, .down {
     position: absolute;
     width: fit-content;
-    height:fit-content;
+    height: fit-content;
     right: 13px;
 }
 

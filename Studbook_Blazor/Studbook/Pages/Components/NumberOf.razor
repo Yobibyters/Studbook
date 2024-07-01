@@ -10,10 +10,10 @@
            @bind=Value
            @bind:event="oninput"
            step="@Step.ToString(CultureInfo.InvariantCulture)" />
-    <div class="up" @ref=UpElem>
+    <div class="up  @(IsValid ? "" : "error-updown")" @ref=UpElem>
         <i class="ph-bold ph-caret-up"></i>
     </div>
-    <div class="down" @ref=DownElem>
+    <div class="down  @(IsValid ? "" : "error-updown")" @ref=DownElem>
         <i class="ph-bold ph-caret-down"></i>
     </div>
 </div>
