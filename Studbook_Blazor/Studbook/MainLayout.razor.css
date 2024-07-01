@@ -9,10 +9,6 @@ img {
     user-select: none;
 }
 
-i {
-    font-size: 35px;
-}
-
 ul {
     list-style: none;
 }
@@ -69,6 +65,10 @@ main {
     padding-right: 25px;
     margin-left: auto;
 }
+
+    .menu i {
+        font-size: 35px;
+    }
 
 .menu-item {
     position: relative;
