@@ -1,7 +1,17 @@
 ﻿@inherits LayoutComponentBase
+@inject ICalculationService calc
 
 <div class="container">
     <header class="header">
+
+        <div class="rating">
+            @Rating
+        </div>
+
+        <button @ref=HamburgerElem class="hamburger">
+            <i class="ph ph-list"></i>
+        </button>
+
         <div @ref=MenuElem class="menu">
             <div class="menu-item svg">
                 <a href="https://github.com/Yobibyters/Studbook" target="_blank">
@@ -42,9 +52,7 @@
                 </div>
             </div>
         </div>
-        <button @ref=HamburgerElem class="hamburger">
-            <i class="ph ph-list"></i>
-        </button>
+
     </header>
 
     <main>
@@ -60,6 +68,13 @@
     ElementReference HamburgerElem;
     ElementReference MenuElem;
 
+    double Rating { get; set; }
+
+    protected override void OnInitialized()
+    {
+        calc.RatingChanged += OnRatingChanged;
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -67,5 +82,11 @@
             jsModule = await js.InvokeAsync<IJSObjectReference>("import", "./MainLayout.razor.js");
             await jsModule.InvokeVoidAsync("MainLayout.Init", HamburgerElem, MenuElem);
         }
+    }
+
+    private void OnRatingChanged(object sender, double rating)
+    {
+        Rating = rating;
+        StateHasChanged();
     }
 }

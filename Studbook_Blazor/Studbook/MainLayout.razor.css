@@ -24,6 +24,7 @@ main {
     width: 100%;
     height: 100%;
     overflow-y: auto;
+    padding-top: 50px;
 }
 
 .container {
@@ -37,6 +38,20 @@ main {
     height: 100px;
     width: 100%;
     background: #22223B;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.rating {
+    font-size: 56px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    position: absolute;
 }
 
 .menu {
@@ -47,8 +62,8 @@ main {
     gap: 40px;
     box-sizing: border-box;
     height: 100px;
-    margin-bottom: 50px;
     padding-right: 25px;
+    margin-left: auto;
 }
 
 .menu-item {
@@ -154,6 +169,11 @@ main {
         flex-direction: column;
     }
 
+    .rating {
+        z-index: 3;
+        font-size: 40px;
+    }
+
     .hamburger {
         display: block;
         align-self: end;
@@ -170,7 +190,7 @@ main {
         align-items: center;
         position: absolute;
         top: 60px;
-        z-index: 2;
+        z-index: 1;
         width: 100%;
         gap: 5px;
         margin: 0;
@@ -190,27 +210,27 @@ main {
             padding-bottom: 5px;
         }
 
-            .menu .menu-item:hover {
+            .menu .menu-item > a {
+                width: 100%;
+                height: 100%;
+            }
+
+            .menu .menu-item:hover:not(:has(.dropdown:hover)) {
                 background: #2c2c4c;
             }
 
     .dropdown-btn:hover .dropdown {
-        visibility: hidden;
-        opacity: 0;
         transform: none;
     }
 
     .dropdown {
-        visibility: hidden;
-        opacity: 0;
-        transition: 0.4s;
-        transform: translateX(-100%) !important;
+        display: none;
+        transform: scale(1) translateY(0);
+        visibility: visible;
+        opacity: 1;
         min-width: 100%;
         border-radius: 5px;
-        position: absolute;
-        top: 100%;
-        right: 0;
-        z-index: 1;
+        position: static;
     }
 
     .dropdown-content {
@@ -226,19 +246,21 @@ main {
             justify-content: center;
         }
 
-    .menu.show,
-    .dropdown-btn.show .dropdown {
+    .menu.show {
         visibility: visible;
         opacity: 1;
         transition: 0.4s;
-    }
-
-    .menu.show {
         transform: translateY(0);
     }
 
+
     .dropdown-btn.show .dropdown {
-        transform: translateX(0) !important;
+        display: initial;
+        padding-top: 5px;
+    }
+
+    .dropdown-btn.show.menu-item {
+        padding-bottom: 0px;
     }
 
     .menu-text {
