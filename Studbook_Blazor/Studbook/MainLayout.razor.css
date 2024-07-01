@@ -1,32 +1,4 @@
-﻿a {
-    display: block;
-}
-
-img {
-    width: 100%;
-    height: 35px;
-    user-select: none;
-}
-
-ul {
-    list-style: none;
-}
-
-button {
-    border: none;
-    outline: none;
-    color: #ffffff;
-    background: none;
-}
-
-main {
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
-    padding-top: 50px;
-}
-
-.container {
+﻿.container {
     height: 100vh;
     width: 100vw;
     display: flex;
@@ -65,18 +37,41 @@ main {
     margin-left: auto;
 }
 
+.header .menu a {
+    display: flex;
+    text-decoration: none;
+}
+
+.header .menu img {
+    width: fit-content;
+    height: 35px;
+    user-select: none;
+}
+
+.header .menu ul {
+    list-style: none;
+}
+
+.header .menu button {
+    border: none;
+    outline: none;
+    color: #ffffff;
+    background: none;
+}
+
+.header .menu i {
+    font-size: 35px;
+}
+
+
 .menu-item {
     position: relative;
-}
-
-.svg {
-    width: fit-content;
-    height: fit-content;
-}
-
-.icon {
     color: #ffffff;
-    font-size: 35px;
+}
+
+.menu-text {
+    display: none;
+    font-size: 24px;
 }
 
 .dropdown {
@@ -116,7 +111,6 @@ main {
     font-size: 18px;
 }
 
-
     .dropdown-content ul li {
         padding-right: 10px;
         padding-left: 10px;
@@ -139,8 +133,6 @@ main {
             background: #3e3e64;
         }
 
-
-
 .hamburger {
     display: none;
     font-size: 35px;
@@ -150,7 +142,17 @@ main {
     z-index: 2;
 }
 
+main {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    padding-top: 50px;
+}
+
+
+
 @media (max-width: 800px) {
+
     .header {
         height: 60px;
         min-height: 60px;
@@ -189,10 +191,12 @@ main {
         opacity: 0;
     }
 
+        .menu a {
+            flex-direction: row;
+            color: #ffffff;
+        }
+
         .menu .menu-item {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
             width: 100%;
             padding-top: 5px;
@@ -200,8 +204,17 @@ main {
         }
 
             .menu .menu-item > a {
+                display: flex;
+                flex-direction: row;
+                justify-content: start;
+                align-items: center;
+                padding-left: 10px;
                 width: 100%;
                 height: 100%;
+            }
+
+            .menu .menu-item > .menu-text {
+                padding-left: 10px;
             }
 
             .menu .menu-item:hover:not(:has(.dropdown:hover)) {
@@ -250,5 +263,13 @@ main {
 
     .dropdown-btn.show.menu-item {
         padding-bottom: 0px;
+    }
+
+    .menu-text {
+        display: initial;
+    }
+
+    .menu-icon {
+        display: none;
     }
 }
