@@ -9,6 +9,10 @@ img {
     user-select: none;
 }
 
+i {
+    font-size: 35px;
+}
+
 ul {
     list-style: none;
 }
@@ -68,6 +72,7 @@ main {
 
 .menu-item {
     position: relative;
+    color: #ffffff;
 }
 
 .menu-text {
@@ -80,10 +85,6 @@ main {
     height: fit-content;
 }
 
-.icon {
-    color: #ffffff;
-    font-size: 35px;
-}
 
 .dropdown {
     position: absolute;
@@ -201,9 +202,6 @@ main {
     }
 
         .menu .menu-item {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
             align-items: center;
             width: 100%;
             padding-top: 5px;
@@ -211,8 +209,17 @@ main {
         }
 
             .menu .menu-item > a {
+                display: flex;
+                flex-direction: row;
+                justify-content: start;
+                align-items: center;
+                padding-left: 10px;
                 width: 100%;
                 height: 100%;
+            }
+
+            .menu .menu-item > .menu-text {
+                padding-left: 10px;
             }
 
             .menu .menu-item:hover:not(:has(.dropdown:hover)) {
@@ -265,5 +272,9 @@ main {
 
     .menu-text {
         display: initial;
+    }
+
+    .menu-icon {
+        display: none;
     }
 }
