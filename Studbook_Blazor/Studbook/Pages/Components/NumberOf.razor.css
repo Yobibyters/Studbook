@@ -31,13 +31,14 @@
         margin: 0;
     }
 
-.error {
+.error .input-number {
     background: #e6c6c6;
     border: solid 3px #ab2222;
     transition: 0.3s;
 }
 
-.error-updown i {
+.error .up i,
+.error .down i {
     color: #ab2222;
 }
 
