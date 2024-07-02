@@ -1,19 +1,19 @@
 ﻿@inject IJSRuntime js;
 @using System.Globalization;
 
-<div class="number-of">
+<div class="number-of @(IsValid ? "" : "error")">
     <input @ref=InputElem
-           class="input-number @(IsValid ? "" : "error")"
+           class="input-number"
            type="number"
            min="@Min.ToString(CultureInfo.InvariantCulture)"
            max="@Max.ToString(CultureInfo.InvariantCulture)"
            @bind=Value
            @bind:event="oninput"
            step="@Step.ToString(CultureInfo.InvariantCulture)" />
-    <div class="up  @(IsValid ? "" : "error-updown")" @ref=UpElem>
+    <div class="up" @ref=UpElem>
         <i class="ph-bold ph-caret-up"></i>
     </div>
-    <div class="down  @(IsValid ? "" : "error-updown")" @ref=DownElem>
+    <div class="down" @ref=DownElem>
         <i class="ph-bold ph-caret-down"></i>
     </div>
 </div>
