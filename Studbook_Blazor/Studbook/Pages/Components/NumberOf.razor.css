@@ -1,11 +1,13 @@
 ﻿.number-of {
-    height: 100%;
-    position: relative;
     display: flex;
     flex-direction: column;
-    width: 100%;
-    box-sizing: border-box;
+    position: relative;
     gap: 10px;
+    width: 100%;
+    min-width: 140px;
+    height: 100%;
+    min-height: 50px;
+    box-sizing: border-box;
 }
 
 .input-number {

@@ -1,10 +1,12 @@
 ﻿<div @ref=SubjectScoreElem class="subject-score subject-add">
     <SubjectName @bind-Value=Subject.Name></SubjectName>
-    <NumberOf @bind-Value=Subject.Credit OnChange=@SubjectChanged Step=0.5 Min=0 Max=10></NumberOf>
-    <NumberOf @bind-Value=Subject.Mark OnChange=@SubjectChanged Step=1 Min=0 Max=100></NumberOf>
-    <div class="crutch"></div>
-    <div @ref=RemoveBtnElem class="remove-btn">
-        <i class="ph-bold ph-x"></i>
+    <div class="items-nubmer">
+        <NumberOf @bind-Value=Subject.Credit OnChange=@SubjectChanged Step=0.5 Min=0 Max=10></NumberOf>
+        <NumberOf @bind-Value=Subject.Mark OnChange=@SubjectChanged Step=1 Min=0 Max=100></NumberOf>
+        <div class="crutch"></div>
+        <div @ref=RemoveBtnElem class="remove-btn">
+            <i class="ph-bold ph-x"></i>
+        </div>
     </div>
 </div>
 

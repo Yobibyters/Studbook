@@ -1,9 +1,9 @@
 ﻿.subject-score {
-    height: 75px;
-    /*min-height: 75px;*/
     display: inline-grid;
     grid-template-columns: [name] 45% [credits] minmax(0, 1fr) [score] minmax(0, 1fr);
     grid-column-gap: 24px;
+    height: 75px;
+    min-height: 50px;
     box-sizing: border-box;
     position: relative;
 }
@@ -64,4 +64,16 @@
     width: 50px;
     right: -50px;
     opacity: 0;
+}
+
+@media (max-width: 800px) {
+    .subject-score {
+        height: 75px;
+        min-height: 50px;
+        display: inline-grid;
+        grid-template-columns: [name] 45% [credits] minmax(0, 1fr) [score] minmax(0, 1fr);
+        grid-column-gap: 24px;
+        box-sizing: border-box;
+        position: relative;
+    }
 }
