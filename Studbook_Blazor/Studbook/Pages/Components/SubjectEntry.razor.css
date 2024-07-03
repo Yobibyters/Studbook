@@ -1,8 +1,8 @@
-﻿.subject-score {
+﻿.subject-entry {
     display: grid;
     grid-template-columns: minmax(1fr, 3fr) repeat(2, minmax(90px, 1fr));
     grid-template-rows: 50px;
-    grid-template-areas: "name credit score";
+    grid-template-areas: "name credit mark";
     grid-column-gap: 16px;
     box-sizing: border-box;
     position: relative;
@@ -18,8 +18,8 @@
 }
 
 
-.item-score {
-    grid-area: score;
+.item-mark {
+    grid-area: mark;
 }
 
 .subject-add {
@@ -30,7 +30,7 @@
     animation: movedown 0.2s reverse forwards linear 1;
 }
 
-.subject-score:hover .remove-btn {
+.subject-entry:hover .remove-btn {
     opacity: 1;
     right: -70px;
     transition: opacity 0.2s, right 0.2s;
@@ -81,13 +81,13 @@
 }
 
 @media (max-width: 800px) {
-    .subject-score {
+    .subject-entry {
         display: grid;
         grid-template-columns: repeat(2, minmax(90px, 1fr)) 50px;
         grid-auto-rows: 50px;
         grid-template-areas:
             "name name name"
-            "credit score remove";
+            "credit mark remove";
         grid-gap: 10px;
         box-sizing: border-box;
     }
@@ -101,6 +101,7 @@
     }
 
     .remove-btn {
+        grid-area: remove;
         opacity: 1;
         position: static;
         height: 100%;

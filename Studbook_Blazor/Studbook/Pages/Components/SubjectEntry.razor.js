@@ -1,4 +1,4 @@
-export class SubjectScore {
+export class SubjectEntry {
     static Init(dotNet, subject, removeBtn) {
         removeBtn.addEventListener('click', () => {
             subject.classList.remove("subject-add");
