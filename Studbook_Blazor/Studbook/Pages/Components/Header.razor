@@ -1,0 +1,94 @@
+﻿@inject ICalculationService calc
+@inject IExportService export
+
+<header class="header">
+
+    <div class="rating">
+        @Rating
+    </div>
+
+    <button @ref=HamburgerElem class="hamburger">
+        <i class="ph ph-list"></i>
+    </button>
+
+    <div @ref=MenuElem class="menu">
+        <div class="menu-item">
+            <a href="https://github.com/Yobibyters/Studbook" target="_blank">
+                <img class="menu-icon" src="/assets/github.svg" />
+                <div class="menu-text">GitHub</div>
+            </a>
+        </div>
+
+        <div class="menu-item">
+            <a href="https://pilot.khai.edu/pilot/checkstudent_link.html" target="_blank">
+                <img class="menu-icon" src="/assets/pilot.svg" />
+                <div class="menu-text">Система "PILOT"</div>
+            </a>
+        </div>
+
+        <div class="menu-item icon">
+            <i class="ph ph-download-simple menu-icon"></i>
+            <div class="menu-text">Імпорт</div>
+        </div>
+
+        <div class="menu-item icon dropdown-btn">
+            <i class="ph ph-upload-simple menu-icon"></i>
+            <div class="menu-text">Експорт</div>
+            <div class="dropdown">
+                <div class="dropdown-content">
+                    <ul>
+                        <li @onclick=export.ToClipboard>
+                            Скопіювати в буфер обміну
+                        </li>
+                        <li @onclick=export.ToXlsx>
+                            XLSX
+                        </li>
+                        <li @onclick=export.ToPng>
+                            PNG
+                        </li>
+                        <li @onclick=export.ToJpeg>
+                            JPEG
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</header>
+
+@code {
+    [Inject]
+    IJSRuntime js { get; set; } = null!;
+    IJSObjectReference jsModule = null!;
+
+    ElementReference HamburgerElem;
+    ElementReference MenuElem;
+
+    double Rating { get; set; }
+
+    protected override void OnInitialized()
+    {
+        calc.RatingChanged += OnRatingChanged;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            jsModule = await js.InvokeAsync<IJSObjectReference>("import", "./MainLayout.razor.js");
+            await jsModule.InvokeVoidAsync("MainLayout.Init", HamburgerElem, MenuElem);
+        }
+    }
+
+    private void Test()
+    {
+        int ffs = 0;
+    }
+
+    private void OnRatingChanged(object sender, double rating)
+    {
+        Rating = rating;
+        StateHasChanged();
+    }
+}
