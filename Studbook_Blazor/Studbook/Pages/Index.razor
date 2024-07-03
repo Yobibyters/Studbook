@@ -1,8 +1,10 @@
 ﻿@page "/"
 @inject ICalculationService calc
+@inject IExportService export
+@implements IDisposable
 
 <div class="index-container">
-    <div class="content">
+    <div class="content" @ref=ContentElem>
         @foreach (Subject subject in Subjects)
         {
             <SubjectScore @key=subject
@@ -21,6 +23,42 @@
 @code {
     List<Subject> Subjects { get; set; } = new();
 
+    ElementReference ContentElem;
+
+    [Inject]
+    IJSRuntime js { get; set; } = null!;
+    IJSObjectReference jsModule { get; set; } = null!;
+
+    protected override void OnInitialized()
+    {
+        export.ExportToClipboard += OnExportToClipboard;
+        export.ExportToPng += OnExportToPng;
+        export.ExportToJpeg += OnExportToJpeg;
+    }
+
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            jsModule = await js.InvokeAsync<IJSObjectReference>("import", "/js/savers.js");
+        }
+    }
+
+    private async void OnExportToClipboard(object? sender, EventArgs e)
+    {
+        await jsModule.InvokeVoidAsync("SaveToClipboard", ContentElem);
+    }
+
+    private async void OnExportToPng(object? sender, EventArgs e)
+    {
+        await jsModule.InvokeVoidAsync("SaveToPng", ContentElem);
+    }
+
+    private async void OnExportToJpeg(object? sender, EventArgs e)
+    {
+        await jsModule.InvokeVoidAsync("SaveToJpeg", ContentElem);
+    }
+
     private void AddSubject()
     {
         Subject newSubject = new Subject();
@@ -31,5 +69,12 @@
     {
         Subjects.Remove(subject);
         calc.CalculateRating(Subjects);
+    }
+
+    public void Dispose()
+    {
+        export.ExportToClipboard -= OnExportToClipboard;
+        export.ExportToPng -= OnExportToPng;
+        export.ExportToJpeg -= OnExportToJpeg;
     }
 }
