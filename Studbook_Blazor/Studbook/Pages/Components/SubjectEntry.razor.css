@@ -1,6 +1,6 @@
 ﻿.subject-entry {
     display: grid;
-    grid-template-columns: minmax(1fr, 3fr) repeat(2, minmax(90px, 1fr));
+    grid-template-columns: 3fr repeat(2, minmax(90px, 0.5fr));
     grid-template-rows: 50px;
     grid-template-areas: "name credit mark";
     grid-column-gap: 20px;
