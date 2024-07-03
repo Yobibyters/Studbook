@@ -3,17 +3,21 @@
 
 <div class="index-container">
     <div class="content">
-        @foreach (Subject subject in Subjects)
-        {
-            <SubjectScore @key=subject
-                          Subject=subject
-                          RemoveCallback=@RemoveSubject
-                          OnChange=@(() => calc.CalculateRating(Subjects))>
-            </SubjectScore>
-        }
+        <div class="subjects">
+            @foreach (Subject subject in Subjects)
+            {
+                <SubjectEntry @key=subject
+                              Subject=subject
+                              RemoveCallback=@RemoveSubject
+                              OnChange=@(() => calc.CalculateRating(Subjects))>
+                </SubjectEntry>
+            }
+        </div>
         @if (Subjects.Count < 10)
         {
-            <Button Text="Додати предмет" OnClick=AddSubject></Button>
+            <div class="button-padding">
+                <Button Text="Додати предмет" OnClick=AddSubject></Button>
+            </div>
         }
     </div>
 </div>
