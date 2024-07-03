@@ -1,7 +1,7 @@
 ﻿@inject IJSRuntime js;
 @using System.Globalization;
 
-<div class="number-of @(IsValid ? "" : "error")">
+<div class="numeric-up-down @(IsValid ? "" : "error")">
     <input @ref=InputElem
            class="input-number"
            type="number"
@@ -67,8 +67,8 @@
     {
         if (firstRender)
         {
-            jsModule = await js.InvokeAsync<IJSObjectReference>("import", "./Pages/Components/NumberOf.razor.js");
-            await jsModule.InvokeVoidAsync("NumberOf.Init", InputElem, UpElem, DownElem);
+            jsModule = await js.InvokeAsync<IJSObjectReference>("import", "./Pages/Components/NumericUpDown.razor.js");
+            await jsModule.InvokeVoidAsync("NumericUpDown.Init", InputElem, UpElem, DownElem);
         }
     }
 }

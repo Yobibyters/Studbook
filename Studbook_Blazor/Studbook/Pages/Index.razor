@@ -4,18 +4,22 @@
 @implements IDisposable
 
 <div class="index-container">
-    <div class="content" @ref=ContentElem>
-        @foreach (Subject subject in Subjects)
-        {
-            <SubjectScore @key=subject
-                          Subject=subject
-                          RemoveCallback=@RemoveSubject
-                          OnChange=@(() => calc.CalculateRating(Subjects))>
-            </SubjectScore>
-        }
+    <div class="content">
+        <div class="subjects" @ref=TableElem>
+            @foreach (Subject subject in Subjects)
+            {
+                <SubjectEntry @key=subject
+                              Subject=subject
+                              RemoveCallback=@RemoveSubject
+                              OnChange=@(() => calc.CalculateRating(Subjects))>
+                </SubjectEntry>
+            }
+        </div>
         @if (Subjects.Count < 10)
         {
-            <Button Text="Додати предмет" OnClick=AddSubject></Button>
+            <div class="button-padding">
+                <Button Text="Додати предмет" OnClick=AddSubject></Button>
+            </div>
         }
     </div>
 </div>
@@ -23,7 +27,7 @@
 @code {
     List<Subject> Subjects { get; set; } = new();
 
-    ElementReference ContentElem;
+    ElementReference TableElem;
 
     [Inject]
     IJSRuntime js { get; set; } = null!;
@@ -46,17 +50,17 @@
 
     private async void OnExportToClipboard(object? sender, EventArgs e)
     {
-        await jsModule.InvokeVoidAsync("SaveToClipboard", ContentElem);
+        await jsModule.InvokeVoidAsync("SaveToClipboard", TableElem);
     }
 
     private async void OnExportToPng(object? sender, EventArgs e)
     {
-        await jsModule.InvokeVoidAsync("SaveToPng", ContentElem);
+        await jsModule.InvokeVoidAsync("SaveToPng", TableElem);
     }
 
     private async void OnExportToJpeg(object? sender, EventArgs e)
     {
-        await jsModule.InvokeVoidAsync("SaveToJpeg", ContentElem);
+        await jsModule.InvokeVoidAsync("SaveToJpeg", TableElem);
     }
 
     private void AddSubject()

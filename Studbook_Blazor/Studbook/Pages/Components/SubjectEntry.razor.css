@@ -1,0 +1,113 @@
+﻿.subject-entry {
+    display: grid;
+    grid-template-columns: 3fr repeat(2, minmax(90px, 0.5fr));
+    grid-template-rows: 50px;
+    grid-template-areas: "name credit mark";
+    grid-column-gap: 20px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.item-subject-name {
+    grid-area: name;
+}
+
+
+.item-credit {
+    grid-area: credit;
+}
+
+
+.item-mark {
+    grid-area: mark;
+}
+
+.subject-add {
+    animation: movedown 0.4s normal linear;
+}
+
+.subject-remove {
+    animation: movedown 0.2s reverse forwards linear 1;
+}
+
+.subject-entry:hover .remove-btn {
+    opacity: 1;
+    right: -70px;
+    transition: opacity 0.2s, right 0.2s;
+}
+
+.remove-btn {
+    display: flex;
+    opacity: 0;
+    position: absolute;
+    height: 100%;
+    width: 50px;
+    background: #c30808;
+    border: solid 3px #d34e4e;
+    border-radius: 10px;
+    color: #ffffff;
+    right: -50px;
+    font-size: 36px;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s;
+}
+
+    .remove-btn:hover {
+        background: #a30808;
+        transition: 0.2s;
+    }
+
+@keyframes movedown {
+    from {
+        max-height: 0;
+        transform: translateY(-25px);
+        opacity: 0;
+    }
+
+    to {
+        max-height: 200px;
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.crutch {
+    position: absolute;
+    height: 100%;
+    width: 25px;
+    right: -25px;
+    opacity: 0;
+}
+
+@media (max-width: 800px) {
+    .subject-entry {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(90px, 1fr)) 50px;
+        grid-auto-rows: 50px;
+        grid-template-areas:
+            "name name name"
+            "credit mark remove";
+        grid-gap: 10px;
+        box-sizing: border-box;
+    }
+
+    .crutch {
+        display: none;
+    }
+
+    .item-remove {
+        grid-area: remove;
+    }
+
+    .remove-btn {
+        grid-area: remove;
+        opacity: 1;
+        position: static;
+        height: 100%;
+        color: #ffffff;
+        right: 0px;
+        font-size: 36px;
+        transition: none;
+    }
+}

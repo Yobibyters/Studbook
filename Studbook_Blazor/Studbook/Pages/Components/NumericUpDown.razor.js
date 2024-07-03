@@ -1,4 +1,4 @@
-﻿export class NumberOf {
+﻿export class NumericUpDown {
     static Init(input, up, down) {
         up.addEventListener('click', e => {
             input.stepUp();
