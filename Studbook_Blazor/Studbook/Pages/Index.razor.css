@@ -9,3 +9,9 @@
         margin-bottom: 10px;
         box-sizing: border-box;
     }
+
+@media (max-width: 800px) {
+    .index-container .content {
+        padding: 0 5%;
+    }
+}
