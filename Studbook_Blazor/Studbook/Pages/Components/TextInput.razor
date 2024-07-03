@@ -1,5 +1,6 @@
 ﻿<div class="subject-name">
-    <input class="input-text" type="text" @bind=Value />
+    <input class="input-text" type="text" placeholder=@Placeholder
+           @bind=Value />
 </div>
 
 @code {
@@ -16,6 +17,9 @@
             ValueChanged.InvokeAsync(_value);
         }
     }
+
+    [Parameter]
+    public string Placeholder { get; set; } = default!;
 
     [Parameter]
     public EventCallback<string?> ValueChanged { get; set; }
