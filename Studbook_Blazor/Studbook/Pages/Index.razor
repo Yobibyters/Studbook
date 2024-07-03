@@ -5,11 +5,11 @@
     <div class="content">
         @foreach (Subject subject in Subjects)
         {
-            <SubjectScore @key=subject
+            <SubjectEntry @key=subject
                           Subject=subject
                           RemoveCallback=@RemoveSubject
                           OnChange=@(() => calc.CalculateRating(Subjects))>
-            </SubjectScore>
+            </SubjectEntry>
         }
         @if (Subjects.Count < 10)
         {

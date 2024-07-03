@@ -1,13 +1,13 @@
 ﻿<div @ref=SubjectScoreElem class="subject-score subject-add">
     <div class="item-subject-name">
-        <SubjectName @bind-Value=Subject.Name></SubjectName>
+        <TextInput @bind-Value=Subject.Name></TextInput>
     </div>
     <div class="item-credit">
-        <NumberOf @bind-Value=Subject.Credit OnChange=@SubjectChanged Step=0.5 Min=0 Max=10></NumberOf>
+        <NumericUpDown @bind-Value=Subject.Credit OnChange=@SubjectChanged Step=0.5 Min=0 Max=10></NumericUpDown>
 
     </div>
-    <div class="item-score">
-        <NumberOf @bind-Value=Subject.Mark OnChange=@SubjectChanged Step=1 Min=0 Max=100></NumberOf>
+    <div class="item-mark">
+        <NumericUpDown @bind-Value=Subject.Mark OnChange=@SubjectChanged Step=1 Min=0 Max=100></NumericUpDown>
 
     </div>
     <div class="crutch"></div>
