@@ -1,9 +1,11 @@
 ﻿@page "/"
 @inject ICalculationService calc
+@inject IExportService export
+@implements IDisposable
 
 <div class="index-container">
     <div class="content">
-        <div class="subjects">
+        <div class="subjects" @ref=TableElem>
             <div class="rating">
                 @Rating
             </div>
@@ -18,7 +20,7 @@
         </div>
         @if (Subjects.Count < 10)
         {
-            <div class="button-padding">
+            <div class="button">
                 <Button Text="Додати предмет" OnClick=AddSubject></Button>
             </div>
         }
@@ -30,9 +32,42 @@
 
     double Rating { get; set; }
 
+    ElementReference TableElem;
+
+    [Inject]
+    IJSRuntime js { get; set; } = null!;
+    IJSObjectReference jsModule { get; set; } = null!;
+
     protected override void OnInitialized()
     {
+        export.ExportToClipboard += OnExportToClipboard;
+        export.ExportToPng += OnExportToPng;
+        export.ExportToJpeg += OnExportToJpeg;
+
         calc.RatingChanged += OnRatingChanged;
+    }
+
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            jsModule = await js.InvokeAsync<IJSObjectReference>("import", "/js/savers.js");
+        }
+    }
+
+    private async void OnExportToClipboard(object? sender, EventArgs e)
+    {
+        await jsModule.InvokeVoidAsync("SaveToClipboard", TableElem);
+    }
+
+    private async void OnExportToPng(object? sender, EventArgs e)
+    {
+        await jsModule.InvokeVoidAsync("SaveToPng", TableElem);
+    }
+
+    private async void OnExportToJpeg(object? sender, EventArgs e)
+    {
+        await jsModule.InvokeVoidAsync("SaveToJpeg", TableElem);
     }
 
     private void OnRatingChanged(object sender, double rating)
@@ -51,5 +86,14 @@
     {
         Subjects.Remove(subject);
         calc.CalculateRating(Subjects);
+    }
+
+    public void Dispose()
+    {
+        export.ExportToClipboard -= OnExportToClipboard;
+        export.ExportToPng -= OnExportToPng;
+        export.ExportToJpeg -= OnExportToJpeg;
+
+        calc.RatingChanged -= OnRatingChanged;
     }
 }
