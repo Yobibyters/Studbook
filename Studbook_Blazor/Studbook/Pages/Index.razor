@@ -6,6 +6,9 @@
 <div class="index-container">
     <div class="content">
         <div class="subjects" @ref=TableElem>
+            <div class="rating">
+                @Rating
+            </div>
             @foreach (Subject subject in Subjects)
             {
                 <SubjectEntry @key=subject
@@ -27,6 +30,8 @@
 @code {
     List<Subject> Subjects { get; set; } = new();
 
+    double Rating { get; set; }
+
     ElementReference TableElem;
 
     [Inject]
@@ -38,6 +43,8 @@
         export.ExportToClipboard += OnExportToClipboard;
         export.ExportToPng += OnExportToPng;
         export.ExportToJpeg += OnExportToJpeg;
+
+        calc.RatingChanged += OnRatingChanged;
     }
 
     protected override async void OnAfterRender(bool firstRender)
@@ -63,6 +70,12 @@
         await jsModule.InvokeVoidAsync("SaveToJpeg", TableElem);
     }
 
+    private void OnRatingChanged(object sender, double rating)
+    {
+        Rating = rating;
+        StateHasChanged();
+    }
+
     private void AddSubject()
     {
         Subject newSubject = new Subject();
@@ -80,5 +93,7 @@
         export.ExportToClipboard -= OnExportToClipboard;
         export.ExportToPng -= OnExportToPng;
         export.ExportToJpeg -= OnExportToJpeg;
+
+        calc.RatingChanged -= OnRatingChanged;
     }
 }

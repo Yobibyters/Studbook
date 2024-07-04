@@ -1,13 +1,13 @@
 ﻿<div @ref=SubjectEntryElem class="subject-entry subject-add">
     <div class="item-subject-name">
-        <TextInput @bind-Value=Subject.Name></TextInput>
+        <TextInput @bind-Value=Subject.Name Placeholder="Назва предмету"></TextInput>
     </div>
     <div class="item-credit">
-        <NumericUpDown @bind-Value=Subject.Credit OnChange=@SubjectChanged Step=0.5 Min=0 Max=10></NumericUpDown>
+        <NumericUpDown @bind-Value=Subject.Credit Placeholder="Кредит" OnChange=@SubjectChanged Step=0.5 Min=0 Max=10></NumericUpDown>
 
     </div>
     <div class="item-mark">
-        <NumericUpDown @bind-Value=Subject.Mark OnChange=@SubjectChanged Step=1 Min=0 Max=100></NumericUpDown>
+        <NumericUpDown @bind-Value=Subject.Mark Placeholder="Бали" OnChange=@SubjectChanged Step=1 Min=0 Max=100></NumericUpDown>
 
     </div>
     <div @ref=RemoveBtnContainerElem class="remove-btn-container">
