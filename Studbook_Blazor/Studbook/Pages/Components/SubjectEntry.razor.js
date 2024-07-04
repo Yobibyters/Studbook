@@ -9,7 +9,6 @@ export class SubjectEntry {
         let timeoutId;
 
         removeBtn.addEventListener('transitionend', () => {
-            console.log('end', isTransition);
             if (!window.matchMedia('(max-device-width: 800px)').matches) {
                 let style = getComputedStyle(removeBtn);
                 if (style.opacity < 0.1) {
@@ -38,7 +37,6 @@ export class SubjectEntry {
         });
 
         subject.addEventListener('mouseleave', () => {
-            console.log('mouseleave');
             if (!window.matchMedia('(max-device-width: 800px)').matches) {
                 removeBtn.style.opacity = '0';
                 removeBtn.style.right = '-50px';
