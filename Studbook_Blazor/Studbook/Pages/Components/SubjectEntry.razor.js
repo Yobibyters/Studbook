@@ -6,6 +6,8 @@ export class SubjectEntry {
             subject.classList.add("subject-remove");
         });
 
+        let timeoutId;
+
         removeBtn.addEventListener('transitionend', () => {
             if (!window.matchMedia('(max-device-width: 800px)').matches) {
                 let style = getComputedStyle(removeBtn);
@@ -16,6 +18,7 @@ export class SubjectEntry {
         });
 
         subject.addEventListener('mouseenter', () => {
+            clearTimeout(timeoutId);
             if (!window.matchMedia('(max-device-width: 800px)').matches) {
                 removeBtnContainer.style.display = 'block';
                 document.body.offsetHeight;
@@ -24,10 +27,22 @@ export class SubjectEntry {
             }
         });
 
+        subject.addEventListener('mousemove', () => {
+            clearTimeout(timeoutId);
+            if (!window.matchMedia('(max-device-width: 800px)').matches) {
+                if (removeBtnContainer.style.display !== 'block') {
+                    removeBtnContainer.style.display = 'block';
+                }
+            }
+        });
+
         subject.addEventListener('mouseleave', () => {
             if (!window.matchMedia('(max-device-width: 800px)').matches) {
                 removeBtn.style.opacity = '0';
                 removeBtn.style.right = '-50px';
+                timeoutId = setTimeout(() => {
+                    removeBtnContainer.style.display = 'none';
+                }, 1000);
             }
         });
 
