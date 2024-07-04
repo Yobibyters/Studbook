@@ -105,15 +105,19 @@
             grid-area: remove;
         }
 
-        .remove-btn {
-            grid-area: remove;
-            opacity: 1;
-            position: static;
-            height: 100%;
-            color: #ffffff;
-            right: 0px;
-            font-size: 36px;
-            transition: none;
+        .remove-btn-container {
+            display: block;
+
+            .remove-btn {
+                grid-area: remove;
+                opacity: 1;
+                position: static;
+                height: 100%;
+                color: #ffffff;
+                right: 0px;
+                font-size: 36px;
+                transition: none;
+            }
         }
     }
 }
