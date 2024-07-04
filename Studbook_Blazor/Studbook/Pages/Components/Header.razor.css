@@ -204,6 +204,7 @@
         min-width: 100%;
         border-radius: 5px;
         position: static;
+        -webkit-tap-highlight-color: transparent;
     }
 
     .dropdown-content {
