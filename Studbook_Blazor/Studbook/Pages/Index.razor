@@ -4,6 +4,9 @@
 <div class="index-container">
     <div class="content">
         <div class="subjects">
+            <div class="rating">
+                @Rating
+            </div>
             @foreach (Subject subject in Subjects)
             {
                 <SubjectEntry @key=subject
@@ -24,6 +27,19 @@
 
 @code {
     List<Subject> Subjects { get; set; } = new();
+
+    double Rating { get; set; }
+
+    protected override void OnInitialized()
+    {
+        calc.RatingChanged += OnRatingChanged;
+    }
+
+    private void OnRatingChanged(object sender, double rating)
+    {
+        Rating = rating;
+        StateHasChanged();
+    }
 
     private void AddSubject()
     {
