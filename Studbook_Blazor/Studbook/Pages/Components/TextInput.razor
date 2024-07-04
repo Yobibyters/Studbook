@@ -19,7 +19,7 @@
     }
 
     [Parameter]
-    public string Placeholder { get; set; } = default!;
+    public string? Placeholder { get; set; }
 
     [Parameter]
     public EventCallback<string?> ValueChanged { get; set; }
