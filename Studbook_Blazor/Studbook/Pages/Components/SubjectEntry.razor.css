@@ -47,6 +47,7 @@
     border-radius: 10px;
     color: #ffffff;
     right: -50px;
+    top: 0;
     font-size: 36px;
     justify-content: center;
     align-items: center;
@@ -57,6 +58,15 @@
         background: #a30808;
         transition: 0.2s;
     }
+
+.crutch {
+    position: absolute;
+    height: 100%;
+    width: 25px;
+    top: 0;
+    right: -25px;
+    opacity: 0;
+}
 
 @keyframes movedown {
     from {
@@ -70,14 +80,6 @@
         transform: translateY(0);
         opacity: 1;
     }
-}
-
-.crutch {
-    position: absolute;
-    height: 100%;
-    width: 25px;
-    right: -25px;
-    opacity: 0;
 }
 
 @media (max-width: 800px) {

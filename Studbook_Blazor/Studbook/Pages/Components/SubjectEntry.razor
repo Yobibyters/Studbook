@@ -10,9 +10,11 @@
         <NumericUpDown @bind-Value=Subject.Mark OnChange=@SubjectChanged Step=1 Min=0 Max=100></NumericUpDown>
 
     </div>
-    <div class="crutch"></div>
-    <div @ref=RemoveBtnElem class="remove-btn item-remove">
-        <i class="ph-bold ph-x"></i>
+    <div @ref=RemoveBtnContainerElem class="remove-btn-container">
+        <div class="crutch"></div>
+        <div @ref=RemoveBtnElem class="remove-btn item-remove">
+            <i class="ph-bold ph-x"></i>
+        </div>
     </div>
 </div>
 
@@ -32,6 +34,7 @@
     IJSObjectReference jsModule = null!;
 
     ElementReference RemoveBtnElem;
+    ElementReference RemoveBtnContainerElem;
     ElementReference SubjectEntryElem;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -39,7 +42,7 @@
         if (firstRender)
         {
             jsModule = await js.InvokeAsync<IJSObjectReference>("import", "./Pages/Components/SubjectEntry.razor.js");
-            await jsModule.InvokeVoidAsync("SubjectEntry.Init", DotNetObjectReference.Create(this), SubjectEntryElem, RemoveBtnElem);
+            await jsModule.InvokeVoidAsync("SubjectEntry.Init", DotNetObjectReference.Create(this), SubjectEntryElem, RemoveBtnElem, RemoveBtnContainerElem);
         }
     }
 
