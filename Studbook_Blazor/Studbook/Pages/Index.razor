@@ -6,7 +6,7 @@
 <div class="index-container">
     <div class="content">
         <div class="subjects" @ref=TableElem>
-            <div class="rating">
+            <div @ref=RatingElem class="rating">
                 @Rating
             </div>
             @foreach (Subject subject in Subjects)
@@ -33,6 +33,7 @@
     double Rating { get; set; }
 
     ElementReference TableElem;
+    ElementReference RatingElem;
 
     [Inject]
     IJSRuntime js { get; set; } = null!;
@@ -51,23 +52,24 @@
     {
         if (firstRender)
         {
-            jsModule = await js.InvokeAsync<IJSObjectReference>("import", "/js/savers.js");
+            // jsModule = await js.InvokeAsync<IJSObjectReference>("import", "/js/savers.js");
+            jsModule = await js.InvokeAsync<IJSObjectReference>("import", "./Pages/Index.razor.js");
         }
     }
 
     private async void OnExportToClipboard(object? sender, EventArgs e)
     {
-        await jsModule.InvokeVoidAsync("SaveToClipboard", TableElem);
+        await jsModule.InvokeVoidAsync("SaveToClipboard", TableElem, RatingElem);
     }
 
     private async void OnExportToPng(object? sender, EventArgs e)
     {
-        await jsModule.InvokeVoidAsync("SaveToPng", TableElem);
+        await jsModule.InvokeVoidAsync("SaveToPng", TableElem, RatingElem);
     }
 
     private async void OnExportToJpeg(object? sender, EventArgs e)
     {
-        await jsModule.InvokeVoidAsync("SaveToJpeg", TableElem);
+        await jsModule.InvokeVoidAsync("SaveToJpeg", TableElem, RatingElem);
     }
 
     private void OnRatingChanged(object sender, double rating)
