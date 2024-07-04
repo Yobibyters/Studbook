@@ -76,8 +76,8 @@
     {
         if (firstRender)
         {
-            jsModule = await js.InvokeAsync<IJSObjectReference>("import", "./MainLayout.razor.js");
-            await jsModule.InvokeVoidAsync("MainLayout.Init", HamburgerElem, MenuElem);
+            jsModule = await js.InvokeAsync<IJSObjectReference>("import", "./Pages/Components/Header.razor.js");
+            await jsModule.InvokeVoidAsync("Header.Init", HamburgerElem, MenuElem);
         }
     }
 

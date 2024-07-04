@@ -1,4 +1,4 @@
-﻿export class MainLayout {
+export class Header {
     static Init(hamburger, menu) {
         let dropdownBtns = menu.querySelectorAll('.dropdown-btn');
         dropdownBtns.forEach((btn) => {
