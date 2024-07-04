@@ -1,16 +1,11 @@
 ﻿export class MainLayout {
     static Init(hamburger, menu) {
         let dropdownBtns = menu.querySelectorAll('.dropdown-btn');
-        dropdownBtns.forEach((item) => {
-            let dropdownElems = menu.querySelectorAll('.dropdown');
-            dropdownElems.forEach((elem) => {
-                elem.addEventListener("click", (e) => {
-                    e.stopPropagation();
-                });
-            });
-
-            item.addEventListener("click", () => {
-                item.classList.toggle("show");
+        dropdownBtns.forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+                if (!e.target.closest('.dropdown')) {
+                    btn.classList.toggle("show");
+                }
             });
         });
 
