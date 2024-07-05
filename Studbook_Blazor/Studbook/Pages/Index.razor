@@ -14,7 +14,7 @@
                 <SubjectEntry @key=subject
                               Subject=subject
                               RemoveCallback=@RemoveSubject
-                              OnChange=@(() => calc.CalculateRating(Subjects))>
+                              OnChange=@SubjectChanged>
                 </SubjectEntry>
             }
         </div>
@@ -39,7 +39,7 @@
     IJSRuntime js { get; set; } = null!;
     IJSObjectReference jsModule { get; set; } = null!;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         export.ExportToClipboard += OnExportToClipboard;
         export.ExportToPng += OnExportToPng;
@@ -78,13 +78,18 @@
         StateHasChanged();
     }
 
-    private void AddSubject()
+    private async Task SubjectChanged()
+    {
+        calc.CalculateRating(Subjects);
+    }
+
+    private async Task AddSubject()
     {
         Subject newSubject = new Subject();
         Subjects.Add(newSubject);
     }
 
-    private void RemoveSubject(Subject subject)
+    private async Task RemoveSubject(Subject subject)
     {
         Subjects.Remove(subject);
         calc.CalculateRating(Subjects);

@@ -1,6 +1,6 @@
 ﻿<div @ref=SubjectEntryElem class="subject-entry subject-add">
     <div class="item-subject-name">
-        <TextInput @bind-Value=Subject.Name Placeholder="Назва предмету"></TextInput>
+        <TextInput @bind-Value=Subject.Name Placeholder="Назва предмету" OnChange=@SubjectChanged></TextInput>
     </div>
     <div class="item-credit">
         <NumericUpDown @bind-Value=Subject.Credit Placeholder="Кредит" OnChange=@SubjectChanged Step=0.5 Min=0 Max=10></NumericUpDown>
