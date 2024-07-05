@@ -1,3 +1,4 @@
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Studbook;
@@ -12,5 +13,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 builder.Services.AddScoped<ICalculationService, CalculationService>();
 builder.Services.AddScoped<IExportService, ExportService>();
+
+builder.Services.AddBlazoredLocalStorage();
 
 await builder.Build().RunAsync();

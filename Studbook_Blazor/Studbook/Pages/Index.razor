@@ -1,6 +1,7 @@
 ﻿@page "/"
 @inject ICalculationService calc
 @inject IExportService export
+@inject ILocalStorageService localStorage;
 @implements IDisposable
 
 <div class="index-container">
@@ -41,6 +42,11 @@
 
     protected override async Task OnInitializedAsync()
     {
+        if (await localStorage.ContainKeyAsync("subjects"))
+        {
+            Subjects = await localStorage.GetItemAsync<List<Subject>>("subjects");
+        }
+
         export.ExportToClipboard += OnExportToClipboard;
         export.ExportToPng += OnExportToPng;
         export.ExportToJpeg += OnExportToJpeg;
@@ -87,12 +93,21 @@
     {
         Subject newSubject = new Subject();
         Subjects.Add(newSubject);
+        await localStorage.SetItemAsync<List<Subject>>("subjects", Subjects);
     }
 
     private async Task RemoveSubject(Subject subject)
     {
         Subjects.Remove(subject);
         calc.CalculateRating(Subjects);
+        if (Subjects.Count == 0)
+        {
+            await localStorage.RemoveItemAsync("subjects");
+        }
+        else
+        {
+            await localStorage.SetItemAsync<List<Subject>>("subjects", Subjects);
+        }
     }
 
     public void Dispose()
