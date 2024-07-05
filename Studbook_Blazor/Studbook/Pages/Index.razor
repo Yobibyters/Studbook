@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using ClosedXML.Excel
 @inject ICalculationService calc
 @inject IExportService export
 @inject ILocalStorageService localStorage;
@@ -50,6 +51,7 @@
         export.ExportToClipboard += OnExportToClipboard;
         export.ExportToPng += OnExportToPng;
         export.ExportToJpeg += OnExportToJpeg;
+        export.ExportToXlsx += OnExportToXlsx;
 
         calc.RatingChanged += OnRatingChanged;
     }
@@ -76,6 +78,66 @@
     private async void OnExportToJpeg(object? sender, EventArgs e)
     {
         await jsModule.InvokeVoidAsync("SaveToJpeg", TableElem, RatingElem);
+    }
+
+    private async void OnExportToXlsx(object? sender, EventArgs e)
+    {
+        List<Subject> validSubjects = Subjects
+            .Where(s =>
+                s.Credit is not null &&
+                s.Mark is not null &&
+                s.Mark >= Subject.MarkMin && s.Mark <= Subject.MarkMax &&
+                s.Credit >= Subject.CreditMin && s.Credit <= Subject.CreditMax)
+            .ToList();
+
+        using var wb = new XLWorkbook();
+        var ws = wb.AddWorksheet();
+        ws.Cell("A1").InsertData(new[] { "Предмет", "Кредит", "Коефіцієнт", "Бал", "Підсумок" }, true);
+        if (validSubjects.Count > 0)
+        {
+            ws.Cell("A2").InsertData(validSubjects.Select(s => new { s.Name, s.Credit }));
+            ws.Cell("D2").InsertData(validSubjects.Select(s => new { s.Mark }));
+            var lastRowUsed = ws.LastRowUsed().RowNumber();
+            ws.Cell($"B{lastRowUsed + 1}").FormulaA1 = $"SUM(B2:B{lastRowUsed})";
+            for (int i = 2; i <= lastRowUsed; i++)
+            {
+                ws.Cell($"C{i}").FormulaA1 = $"B{i}/B{lastRowUsed + 1}";
+                ws.Cell($"E{i}").FormulaA1 = $"C{i}*D{i}";
+            }
+            ws.Cell($"E{lastRowUsed + 1}").FormulaA1 = $"SUM(E2:E{lastRowUsed})";
+
+            ws.Columns().AdjustToContents(1, 1);
+            ws.Column("D").Width = 5;
+            ws.Column("E").Width = 8;
+
+            ws.Cell($"E{lastRowUsed + 1}").Style.Border.TopBorder = XLBorderStyleValues.Thick;
+            ws.Cell($"E{lastRowUsed + 1}").Style.Border.BottomBorder = XLBorderStyleValues.Thick;
+            ws.Cell($"E{lastRowUsed + 1}").Style.Border.LeftBorder = XLBorderStyleValues.Thick;
+            ws.Cell($"E{lastRowUsed + 1}").Style.Border.RightBorder = XLBorderStyleValues.Thick;
+
+            ws.Cell($"B{lastRowUsed + 1}").Style.Border.BottomBorder = XLBorderStyleValues.Dashed;
+            ws.Cell($"B{lastRowUsed + 1}").Style.Border.LeftBorder = XLBorderStyleValues.Dashed;
+            ws.Cell($"B{lastRowUsed + 1}").Style.Border.RightBorder = XLBorderStyleValues.Dashed;
+
+            ws.Range($"A1:E{lastRowUsed}").Style.Border.TopBorder = XLBorderStyleValues.Thin;
+            ws.Range($"A1:E{lastRowUsed}").Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Range($"A1:E{lastRowUsed}").Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+            ws.Range($"A1:E{lastRowUsed}").Style.Border.RightBorder = XLBorderStyleValues.Thin;
+
+            ws.Range($"A2:E{lastRowUsed}").Style.Fill.BackgroundColor = XLColor.FromHtml("#99c37a");
+
+            ws.Range($"B2:E{lastRowUsed + 1}").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
+            ws.Range($"E2:E{lastRowUsed + 1}").Style.NumberFormat.Format = "#,##0.00";
+        }
+
+        using MemoryStream fileStream = new MemoryStream();
+        wb.SaveAs(fileStream);
+
+        await jsModule.InvokeAsync<object>(
+            "SaveAsFile",
+            "rating.xlsx",
+            Convert.ToBase64String(fileStream.ToArray()));
     }
 
     private void OnRatingChanged(object sender, double rating)
@@ -115,6 +177,7 @@
         export.ExportToClipboard -= OnExportToClipboard;
         export.ExportToPng -= OnExportToPng;
         export.ExportToJpeg -= OnExportToJpeg;
+        export.ExportToXlsx -= OnExportToXlsx;
 
         calc.RatingChanged -= OnRatingChanged;
     }
