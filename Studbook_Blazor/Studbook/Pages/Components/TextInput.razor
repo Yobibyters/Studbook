@@ -15,6 +15,7 @@
             if (_value == value) return;
             _value = value;
             ValueChanged.InvokeAsync(_value);
+            OnChange.InvokeAsync();
         }
     }
 
@@ -23,4 +24,7 @@
 
     [Parameter]
     public EventCallback<string?> ValueChanged { get; set; }
+
+    [Parameter]
+    public EventCallback OnChange { get; set; }
 }
