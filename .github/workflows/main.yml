@@ -1,0 +1,34 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: main
+
+permissions: write-all
+    
+jobs:
+  deploy-to-github-pages:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup .NET 7
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '7.0.x'
+        include-prerelease: true
+        
+    - name: Publish .NET Core Project
+      run: dotnet publish Studbook_Blazor/Studbook/Studbook.csproj -c Release --output release --nologo
+
+    - name: Change base-tag in index.html from / to Studbook
+      run: sed -i 's/<base href="\/" \/>/<base href="\/Studbook\/" \/>/g' release/wwwroot/index.html
+
+    - name: Add .nojekyll file
+      run: touch release/wwwroot/.nojekyll
+
+    - name: Uploading files to gh-pages branch
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        branch: gh-pages
+        folder: release/wwwroot
