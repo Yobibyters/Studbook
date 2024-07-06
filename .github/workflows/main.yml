@@ -27,9 +27,6 @@ jobs:
     - name: Publish .NET Core Project
       run: dotnet publish Studbook_Blazor/Studbook/Studbook.csproj -c Release --output release --nologo
 
-    - name: List files before changing base tag
-      run: ls -R release/wwwroot
-
     - name: Change base-tag in index.html from / to Studbook
       run: sed -i 's/<base href="\/" \/>/<base href="\/Studbook\/" \/>/g' release/wwwroot/index.html
 
