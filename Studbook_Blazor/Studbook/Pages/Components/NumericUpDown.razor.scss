@@ -42,10 +42,12 @@
         height: 24px;
         right: 8px;
         background: var(--primary);
+        transition: 0.3s;
 
         i {
             color: var(--on-primary);
             font-size: 24px;
+            transition: 0.3s;
         }
 
         &:hover {
@@ -60,7 +62,6 @@
     .input-number {
         background: var(--error-primary);
         border: solid 3px var(--error-primary-border);
-        transition: 0.3s;
     }
 
     .up, .down {
