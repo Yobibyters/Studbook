@@ -27,6 +27,9 @@ jobs:
     - name: Add .nojekyll file
       run: touch release/wwwroot/.nojekyll
 
+    - name: List files for debugging
+      run: ls -R release/wwwroot
+
     - name: Uploading files to gh-pages branch
       uses: JamesIves/github-pages-deploy-action@v4
       with:
