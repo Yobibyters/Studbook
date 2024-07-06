@@ -149,6 +149,7 @@
     private async Task SubjectChanged()
     {
         calc.CalculateRating(Subjects);
+        await localStorage.SetItemAsync<List<Subject>>("subjects", Subjects);
     }
 
     private async Task AddSubject()
