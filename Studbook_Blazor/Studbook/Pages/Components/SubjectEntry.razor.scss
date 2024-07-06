@@ -30,10 +30,10 @@
             position: absolute;
             height: 100%;
             width: 50px;
-            background: #c30808;
-            border: solid 3px #d34e4e;
+            background: var(--remove-button);
+            border: solid 3px var(--remove-button-border);
             border-radius: 10px;
-            color: #ffffff;
+            color: var(--remove-button-icon);
             top: 0;
             right: -50px;
             font-size: 36px;
@@ -42,7 +42,7 @@
             transition: 0.2s;
 
             &:hover {
-                background: #a30808;
+                background: var(--remove-button-hover);
                 transition: 0.2s;
             }
         }
@@ -113,7 +113,6 @@
                 opacity: 1;
                 position: static;
                 height: 100%;
-                color: #ffffff;
                 right: 0px;
                 font-size: 36px;
                 transition: none;

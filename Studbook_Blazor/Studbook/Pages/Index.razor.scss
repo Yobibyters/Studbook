@@ -12,14 +12,14 @@
             grid-row-gap: 20px;
             padding: 20px;
             box-sizing: border-box;
-            background: #22223B;
+            background: var(--surface);
 
             .rating {
                 display: none;
                 place-self: center;
                 font-size: 56px;
                 font-weight: 500;
-                color: #ffffff;
+                color: var(--on-surface);
             }
 
             .rating.show {
