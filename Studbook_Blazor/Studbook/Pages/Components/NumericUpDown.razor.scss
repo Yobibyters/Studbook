@@ -41,6 +41,7 @@
         width: 24px;
         height: 24px;
         right: 8px;
+        background: var(--primary);
 
         i {
             color: var(--on-primary);
@@ -63,6 +64,8 @@
     }
 
     .up, .down {
+        background: var(--error-primary);
+
         i {
             color: var(--error-on-primary);
         }
