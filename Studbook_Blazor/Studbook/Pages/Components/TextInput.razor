@@ -1,0 +1,30 @@
+﻿<div class="subject-name">
+    <input class="input-text" type="text" placeholder=@Placeholder
+           @bind=Value />
+</div>
+
+@code {
+    string? _value;
+
+    [Parameter]
+    public string? Value
+    {
+        get => _value;
+        set
+        {
+            if (_value == value) return;
+            _value = value;
+            ValueChanged.InvokeAsync(_value);
+            OnChange.InvokeAsync();
+        }
+    }
+
+    [Parameter]
+    public string? Placeholder { get; set; }
+
+    [Parameter]
+    public EventCallback<string?> ValueChanged { get; set; }
+
+    [Parameter]
+    public EventCallback OnChange { get; set; }
+}

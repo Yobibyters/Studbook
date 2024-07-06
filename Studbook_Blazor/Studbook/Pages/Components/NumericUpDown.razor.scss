@@ -1,0 +1,79 @@
+﻿.numeric-up-down {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+
+    .input-number {
+        width: 100%;
+        height: 100%;
+        padding: 0 8px;
+        background: var(--primary);
+        border: solid 3px var(--primary-border);
+        border-radius: 10px;
+        color: var(--primary-text);
+        font-size: 26px;
+        transition: 0.3s;
+
+        &:focus {
+            outline: none;
+        }
+
+        &::-webkit-inner-spin-button,
+        &::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    }
+
+    .up {
+        top: 3px;
+    }
+
+    .down {
+        bottom: 3px;
+    }
+
+    .up, .down {
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        right: 8px;
+        background: var(--primary);
+
+        i {
+            color: var(--on-primary);
+            font-size: 24px;
+        }
+
+        &:hover {
+            i {
+                color: var(--on-primary-hover);
+            }
+        }
+    }
+}
+
+.error {
+    .input-number {
+        background: var(--error-primary);
+        border: solid 3px var(--error-primary-border);
+        transition: 0.3s;
+    }
+
+    .up, .down {
+        background: var(--error-primary);
+
+        i {
+            color: var(--error-on-primary);
+        }
+
+        &:hover {
+            i {
+                color: var(--error-on-primary-hover);
+            }
+        }
+    }
+}

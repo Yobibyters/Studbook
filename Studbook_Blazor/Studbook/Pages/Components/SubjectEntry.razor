@@ -1,0 +1,59 @@
+﻿<div @ref=SubjectEntryElem class="subject-entry subject-add">
+    <div class="item-subject-name">
+        <TextInput @bind-Value=Subject.Name Placeholder="Назва предмету" OnChange=@SubjectChanged></TextInput>
+    </div>
+    <div class="item-credit">
+        <NumericUpDown @bind-Value=Subject.Credit Placeholder="Кредит" OnChange=@SubjectChanged Step=0.5 Min=0 Max=10></NumericUpDown>
+
+    </div>
+    <div class="item-mark">
+        <NumericUpDown @bind-Value=Subject.Mark Placeholder="Бал" OnChange=@SubjectChanged Step=1 Min=0 Max=100></NumericUpDown>
+
+    </div>
+    <div @ref=RemoveBtnContainerElem class="remove-btn-container">
+        <div class="crutch"></div>
+        <div @ref=RemoveBtnElem class="remove-btn item-remove">
+            <i class="ph-bold ph-x"></i>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public Subject Subject { get; set; } = null!;
+
+    [Parameter]
+    public EventCallback<Subject> RemoveCallback { get; set; }
+
+    [Parameter]
+    public EventCallback OnChange { get; set; }
+
+    [Inject]
+    IJSRuntime js { get; set; } = null!;
+    IJSObjectReference jsModule = null!;
+
+    ElementReference RemoveBtnElem;
+    ElementReference RemoveBtnContainerElem;
+    ElementReference SubjectEntryElem;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            jsModule = await js.InvokeAsync<IJSObjectReference>("import", "./Pages/Components/SubjectEntry.razor.js");
+            await jsModule.InvokeVoidAsync("SubjectEntry.Init", DotNetObjectReference.Create(this), SubjectEntryElem, RemoveBtnElem, RemoveBtnContainerElem);
+        }
+    }
+
+    private async Task SubjectChanged()
+    {
+        await OnChange.InvokeAsync();
+    }
+
+    [JSInvokable]
+    public async Task RemoveSubject()
+    {
+        await RemoveCallback.InvokeAsync(Subject);
+    }
+}

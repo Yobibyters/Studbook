@@ -1,0 +1,78 @@
+﻿@inject IJSRuntime js;
+@using System.Globalization;
+
+<div class="numeric-up-down @(IsValid ? "" : "error")">
+    <input @ref=InputElem
+           class="input-number"
+           type="number"
+           placeholder=@Placeholder
+           min="@Min.ToString(CultureInfo.InvariantCulture)"
+           max="@Max.ToString(CultureInfo.InvariantCulture)"
+           @bind=Value
+           @bind:event="oninput"
+           step="@Step.ToString(CultureInfo.InvariantCulture)" />
+    <div class="up" @ref=UpElem>
+        <i class="ph-bold ph-caret-up"></i>
+    </div>
+    <div class="down" @ref=DownElem>
+        <i class="ph-bold ph-caret-down"></i>
+    </div>
+</div>
+
+@code {
+    private IJSObjectReference jsModule = null!;
+
+    private ElementReference InputElem;
+    private ElementReference UpElem;
+    private ElementReference DownElem;
+
+    [Parameter]
+    public EventCallback OnChange { get; set; }
+
+    [Parameter]
+    public double Step { get; set; } = 1;
+
+    [Parameter]
+    public double Min { get; set; } = double.MinValue;
+
+    [Parameter]
+    public double Max { get; set; } = double.MaxValue;
+
+    [Parameter]
+    public string? Placeholder { get; set; }
+
+    public bool IsValid
+    {
+        get =>
+            Value is not null &&
+            Value >= Min &&
+            Value <= Max;
+    }
+
+    double? _value;
+
+    [Parameter]
+    public double? Value
+    {
+        get => _value;
+        set
+        {
+            if (_value == value) return;
+            _value = value;
+            ValueChanged.InvokeAsync(_value);
+            OnChange.InvokeAsync();
+        }
+    }
+
+    [Parameter]
+    public EventCallback<double?> ValueChanged { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            jsModule = await js.InvokeAsync<IJSObjectReference>("import", "./Pages/Components/NumericUpDown.razor.js");
+            await jsModule.InvokeVoidAsync("NumericUpDown.Init", InputElem, UpElem, DownElem);
+        }
+    }
+}
