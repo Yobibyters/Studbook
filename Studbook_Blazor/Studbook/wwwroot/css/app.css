@@ -9,12 +9,41 @@ html, body, #app {
     min-height: 100%;
     height: 100%;
 }
-    
+
 body {
-    background: #22223B;
+    background: var(--surface);
 }
 
 @font-face {
     font-family: 'Rubik';
     src: url('../fonts/rubik-variable-font_wght.ttf');
+}
+
+:root {
+    /*Surface colors*/
+    --surface: #22223B;
+    --surface-hover: #2C2C4C;
+    --on-surface: #FFFFFF;
+    --on-surface-dropdown: #34345D;
+    /*Primary colors*/
+    --primary: #E3E2E2;
+    --primary-border: #484878;
+    --on-primary: #484878;
+    --on-primary-hover: #22223B;
+    --primary-text: #22223B;
+    /*Primary container colors*/
+    --primary-container: #484878;
+    --primary-container-border: #6A6AAD;
+    --primary-container-hover: #3E3E64;
+    --primary-container-text: #FFFFFF;
+    /*Remove button colors*/
+    --remove-button: #C30808;
+    --remove-button-border: #D34E4E;
+    --remove-button-hover: #A30808;
+    --remove-button-icon: #FFFFFF;
+    /*Error colors*/
+    --error-primary: #E6C6C6;
+    --error-primary-border: #AB2222;
+    --error-on-primary: #AB2222;
+    --error-on-primary-hover: #A30808;
 }

@@ -1,20 +1,20 @@
 .header {
-    height: 100px;
-    width: 100%;
-    background: #22223B;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
+    height: 100px;
+    width: 100%;
+    background: var(--surface);
 
     .rating {
-        font-size: 56px;
-        color: #fff;
         display: flex;
         justify-content: center;
         align-items: center;
         font-weight: 500;
         position: absolute;
+        font-size: 56px;
+        color: var(--on-surface);
     }
 
     .hamburger {
@@ -26,7 +26,7 @@
         z-index: 2;
         border: none;
         outline: none;
-        color: #ffffff;
+        color: var(--on-surface);
         background: none;
     }
 
@@ -62,7 +62,7 @@
 
         .menu-item {
             position: relative;
-            color: #ffffff;
+            color: var(--on-surface);
         }
 
         .menu-text {
@@ -85,10 +85,10 @@
                 gap: 10px;
                 margin-top: 15px;
                 min-width: fit-content;
-                color: #ffffff;
-                background-color: #484878;
+                color: var(--primary-container-text);
+                background-color: var(--primary-container);
                 border-radius: 10px;
-                border: solid 3px #6A6AAD;
+                border: solid 3px var(--primary-container-border);
 
                 ul {
                     user-select: none;
@@ -116,7 +116,7 @@
                         }
 
                         &:hover {
-                            background: #3e3e64;
+                            background: var(--primary-container-hover);
                         }
                     }
                 }
@@ -166,13 +166,13 @@
             gap: 5px;
             margin: 0;
             padding: 0;
-            background: #22223B;
+            background: var(--surface);
             visibility: hidden;
             opacity: 0;
 
             a {
                 flex-direction: row;
-                color: #ffffff;
+                color: var(--on-surface);
             }
 
             .menu-item {
@@ -186,7 +186,7 @@
                 }
 
                 &:hover:not(:has(.dropdown:hover)) {
-                    background: #2c2c4c;
+                    background: var(--surface-hover);
                 }
             }
 
@@ -197,7 +197,6 @@
             .menu-icon {
                 display: none;
             }
-
 
             .dropdown {
                 display: none;
@@ -212,7 +211,7 @@
                 .dropdown-content {
                     border: none;
                     margin: 0;
-                    background: #2b2b4c;
+                    background: var(--on-surface-dropdown);
                     border-radius: 0;
 
                     ul li {

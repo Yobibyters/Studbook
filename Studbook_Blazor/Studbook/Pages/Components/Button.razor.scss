@@ -2,11 +2,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #484878;
+    background: var(--primary-container);
     transition: 0.2s;
     width: 100%;
     height: 50px;
-    border: solid 3px #6A6AAD;
+    border: solid 3px var(--primary-container-border);
     border-radius: 10px;
     user-select: none;
 
@@ -17,13 +17,15 @@
     }
 
     &:hover {
-        background: #333356;
+        background: var(--primary-container-hover);
         transition: 0.2s;
     }
 }
 
 @media (max-width: 800px) {
-    .button .text {
-        font-size: 24px;
+    .button {
+        .text {
+            font-size: 24px;
+        }
     }
 }
