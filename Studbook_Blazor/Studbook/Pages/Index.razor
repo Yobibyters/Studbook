@@ -126,7 +126,7 @@
 
             ws.Range($"A2:E{lastRowUsed}").Style.Fill.BackgroundColor = XLColor.FromHtml("#99c37a");
 
-            ws.Range($"B2:E{lastRowUsed + 1}").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Range($"B1:E{lastRowUsed + 1}").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
 
             ws.Range($"E2:E{lastRowUsed + 1}").Style.NumberFormat.Format = "#,##0.00";
         }
