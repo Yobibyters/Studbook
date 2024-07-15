@@ -32,8 +32,6 @@ namespace Studbook.Services
                 }
             }
 
-            rating = rating < 90 ? rating * 0.9 : rating;
-
             rating = Math.Round(rating, 2);
 
             RatingChanged?.Invoke(this, rating);
