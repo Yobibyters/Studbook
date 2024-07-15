@@ -104,7 +104,7 @@
                 ws.Cell($"C{i}").FormulaA1 = $"B{i}/B{lastRowUsed + 1}";
                 ws.Cell($"E{i}").FormulaA1 = $"C{i}*D{i}";
             }
-            ws.Cell($"E{lastRowUsed + 1}").FormulaA1 = $"IF(SUM(E2:E{lastRowUsed}) < 90, SUM(E2:E{lastRowUsed}) * 0.9, SUM(E2:E{lastRowUsed}))";
+            ws.Cell($"E{lastRowUsed + 1}").FormulaA1 = $"SUM(E2:E{lastRowUsed})";
 
             ws.Columns().AdjustToContents(1, 1);
             ws.Column("A").AdjustToContents();
